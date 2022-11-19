@@ -2,8 +2,8 @@
 This file is for tracking groceries and expiration dates
 """
 from food import Food
-from ui import Ui
 from datetime import date, datetime
+
 PRODUCTS_FILE = "tracked_products.txt"
 
 class Groceries:
@@ -16,7 +16,7 @@ class Groceries:
         self.sort_foods_list()
         self.date = date.today()
 
-    def add_food(self, food, expiration=None):
+    def add_food(self, food, expiration="9999-99-99"):
         """
         writes to file in format:
             [Food_Name, Expiration_Date, Purchase_Date, Expiring_Soon, Expired]
@@ -24,7 +24,7 @@ class Groceries:
         """
         
         with open(PRODUCTS_FILE, "a") as products:
-            products.write(food + " " + expiration + " " + self.date + " 0" + " 0" )
+            products.write(f"{food} {expiration} {self.date} 0 0")
 
         self.foods = self.total_food_list()
 
