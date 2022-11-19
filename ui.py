@@ -5,24 +5,25 @@ from tkinter import *
 from tkinter import ttk
 
 class Ui:
-    def __init__(self):
+    def __init__(self, food_list):
+        
+        self.food_list = food_list
+
+    def display_main(self, food_list):
         pass
 
-    def display_current_groceries():
+    def display_current_groceries(self):
         pass
 
-    def display_notification():
+    def display_notification(self, food, count):
         pass
 
-    def food_adder():
+    def food_adder(self):
         pass
-
-
-
 
 root = Tk()
-frm = ttk.Frame(root, padding=10)
+frm = ttk.Frame(root, padding=20)
 frm.grid()
-ttk.Label(frm, text="Hello World!").grid(column=0, row=0)
-ttk.Button(frm, text="Quit", command=root.destroy).grid(column=0, row=1)
+ttk.Button(frm, text="Add Product").grid(column=0, row=0)
+e = ttk.Entry(frm, cursor = 'xterm').grid(column=1, row=0)
 root.mainloop()
