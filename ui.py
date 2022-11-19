@@ -5,11 +5,11 @@ from tkinter import *
 from tkinter import ttk
 
 class Ui:
-    def __init__(self, food_list):
+    def __init__(self):
         
-        self.food_list = food_list
+        pass
 
-    def display_main(self, food_list):
+    def display_main(self):
         pass
 
     def display_current_groceries(self):
