@@ -116,8 +116,7 @@ class Ui_MainWindow(object):
         self.col_label_3.setText(_translate("MainWindow", "Expired"))
         self.menuLanding_Page.setTitle(_translate("MainWindow", "Landing Page"))
 
-
-if __name__ == "__main__":
+def run_ui():
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
