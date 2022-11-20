@@ -48,10 +48,10 @@ class Groceries:
             lines = f.readlines()
         with open(PRODUCTS_FILE, "w") as f:
             for line in lines:
-                if datetime.strptime(line.strip("\n").split(" ")[1], '%Y-%m-%d') > self.date:
+                if datetime.strptime(line.strip("\n").split(" ")[1], '%Y-%m-%d').date() > self.date:
                     f.write(line)
                 else:
-                    f.write(line[:-1] + " 1" + "\n")
+                    f.write(line[:-4] + "0 1" + "\n")
 
         self.foods = self.total_food_list()
         
@@ -62,12 +62,12 @@ class Groceries:
         with open(PRODUCTS_FILE, "w") as f:
             for line in lines:
                 food_values = line.strip("\n").split(" ")
-                expiration = datetime.strptime(food_values[1], '%Y-%m-%d')
-                initial_date = datetime.strptime(food_values[2], '%Y-%m-%d')
-                if  (expiration - self.date).days > round(0.25(expiration - initial_date)).days:
+                expiration = datetime.strptime(food_values[1], '%Y-%m-%d').date()
+                initial_date = datetime.strptime(food_values[2], '%Y-%m-%d').date()
+                if  (expiration - self.date).days > round(0.25 * (expiration - initial_date).days):
                     f.write(line)
                 else:
-                    f.write(line[:-3] + " 1 0" + "\n")
+                    f.write(line[:-4] + "1 0" + "\n")
                     
 
         self.foods = self.total_food_list()
@@ -83,6 +83,10 @@ class Groceries:
         return foods
 
     def sort_foods_list(self):
+
+        
+        self.check_expiring_soon()
+        self.check_expired()
 
         for item in self.foods:
             if item[3] == "1":
