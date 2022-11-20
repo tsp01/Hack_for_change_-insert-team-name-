@@ -6,5 +6,3 @@
 ### Technologies used
 - PyQt
 - Python
-- Json
-- Datascience
