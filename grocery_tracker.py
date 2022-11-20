@@ -20,11 +20,11 @@ class Groceries:
         """
         writes to file in format:
             [Food_Name, Expiration_Date, Purchase_Date, Expiring_Soon, Expired]
-            Expiring_Soon, Expired are repressented as 1 or 0
+            Expiring_Soon, Expired are represented as 1 or 0
         """
         
         with open(PRODUCTS_FILE, "a") as products:
-            products.write(f"{food} {expiration} {self.date} 0 0")
+            products.write(f"{food} {expiration} {self.date} 0 0 \n")
 
         self.foods = self.total_food_list()
 
