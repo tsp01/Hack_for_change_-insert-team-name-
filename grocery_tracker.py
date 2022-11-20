@@ -50,7 +50,7 @@ class Groceries:
                 if datetime.strptime(line.strip("\n").split(" ")[1], '%Y-%m-%d').date() > self.date:
                     f.write(line)
                 else:
-                    f.write(line[:-4] + "0 1" + "\n")
+                    f.write(line[:-4] + "0 1\n")
 
         self.foods = self.total_food_list()
         
@@ -63,10 +63,11 @@ class Groceries:
                 food_values = line.strip("\n").split(" ")
                 expiration = datetime.strptime(food_values[1], '%Y-%m-%d').date()
                 initial_date = datetime.strptime(food_values[2], '%Y-%m-%d').date()
-                if  (expiration - self.date).days > round(0.25 * (expiration - initial_date).days):
+                if  (expiration - initial_date).days > 2:
                     f.write(line)
-                else:
-                    f.write(line[:-4] + "1 0" + "\n")
+                elif(expiration - initial_date).days <= 2:
+                    f.write(line[:-4] + "1 0\n")
+
                     
 
         self.foods = self.total_food_list()
@@ -91,9 +92,9 @@ class Groceries:
         self.food_expired = []
         
         for item in self.foods:
-            if item[3] == "1":
+            if int(item[3]) == int("1"):
                 self.food_expiring_soon.append(item)
-            elif item[4] == "1":
+            elif int(item[4]) == 1:
                 self.food_expired.append(item)
             else:
                 self.food_good.append(item)
