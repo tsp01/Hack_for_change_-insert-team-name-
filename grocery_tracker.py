@@ -87,7 +87,10 @@ class Groceries:
         
         self.check_expiring_soon()
         self.check_expired()
-
+        self.food_good = []
+        self.food_expiring_soon = []
+        self.food_expired = []
+        
         for item in self.foods:
             if item[3] == "1":
                 self.food_expiring_soon.append(item)

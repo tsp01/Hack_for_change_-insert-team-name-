@@ -40,12 +40,12 @@ class Ui_MainWindow(object):
         self.add_button.setObjectName("add_button")
         
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget, placeholderText = "Product Name")
-        self.lineEdit.setGeometry(QtCore.QRect(180, 50, 181, 32))
+        self.lineEdit.setGeometry(QtCore.QRect(200, 50, 181, 32))
         # self.lineEdit.returnPressed.connect(self.add_it)
         self.lineEdit.setObjectName("lineEdit")
 
         self.lineEdit1 = QtWidgets.QLineEdit(self.centralwidget, placeholderText = "Expiration Date")
-        self.lineEdit1.setGeometry(QtCore.QRect(300, 50, 181, 32))
+        self.lineEdit1.setGeometry(QtCore.QRect(400, 50, 181, 32))
         # self.lineEdit1.returnPressed.connect(self.add_it)
         self.lineEdit1.setObjectName("lineEdit1")
         
@@ -92,6 +92,9 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         self.groceries.sort_foods_list()
+        self.display_cols()
+        
+    def display_cols(self):
         for item in self.groceries.food_good:
             qItem = QtWidgets.QListWidgetItem()
             qItem.setText(item[0])
@@ -99,10 +102,21 @@ class Ui_MainWindow(object):
             self.col_1.addItem(qItem)
 
         for item in self.groceries.food_expiring_soon:
-            self.col_2.addItem(item[0])
+            qItem = QtWidgets.QListWidgetItem()
+            qItem.setText(item[0])
+            qItem.setCheckState(QtCore.Qt.CheckState.Unchecked)
+            self.col_2.addItem(qItem)
         
         for item in self.groceries.food_expired:
-            self.col_3.addItem(item[0])
+            qItem = QtWidgets.QListWidgetItem()
+            qItem.setText(item[0])
+            qItem.setCheckState(QtCore.Qt.CheckState.Unchecked)
+            self.col_3.addItem(qItem)
+
+    def clear_cols(self):
+        self.col_1.clear()
+        self.col_2.clear()
+        self.col_3.clear()
 
     # Verifies the Expiration date format, in the form YYYY-MM-DD
     def checkExpiration(self, exp):
@@ -120,15 +134,18 @@ class Ui_MainWindow(object):
             qItem = QtWidgets.QListWidgetItem()
             qItem.setText(productName.strip())
             qItem.setCheckState(QtCore.Qt.CheckState.Unchecked)
-            print(type(qItem))
             
             # Add item to list
-            self.col_1.addItem(qItem)
-            self.groceries.add_food(qItem.text(), expDate) # find a way to add an expiration date for the second parameter
+            self.groceries.add_food(qItem.text(), expDate)
+
+            self.groceries.sort_foods_list()
+            self.clear_cols()
+            self.display_cols()
 
             # Clear the item box
             self.lineEdit.setText("")
             self.lineEdit1.setText("")
+        
 
 
     def retranslateUi(self, MainWindow):
