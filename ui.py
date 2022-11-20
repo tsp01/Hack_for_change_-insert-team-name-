@@ -41,8 +41,13 @@ class Ui_MainWindow(object):
         
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget, placeholderText = "Product Name")
         self.lineEdit.setGeometry(QtCore.QRect(180, 50, 181, 32))
-        self.lineEdit.returnPressed.connect(self.add_it)
+        # self.lineEdit.returnPressed.connect(self.add_it)
         self.lineEdit.setObjectName("lineEdit")
+
+        self.lineEdit1 = QtWidgets.QLineEdit(self.centralwidget, placeholderText = "Expiration Date")
+        self.lineEdit1.setGeometry(QtCore.QRect(300, 50, 181, 32))
+        # self.lineEdit1.returnPressed.connect(self.add_it)
+        self.lineEdit1.setObjectName("lineEdit1")
         
         self.col_1 = QtWidgets.QListWidget(self.centralwidget)
         self.col_1.setGeometry(QtCore.QRect(60, 120, 220, 411))
@@ -99,11 +104,19 @@ class Ui_MainWindow(object):
         for item in self.groceries.food_expired:
             self.col_3.addItem(item[0])
 
+    # Verifies the Expiration date format, in the form YYYY-MM-DD
+    def checkExpiration(self, exp):
+        expList = exp.split("-")
+        print(expList)
+        return (expList[0].isnumeric() and expList[1].isnumeric() and expList[2].isnumeric()) and (len(expList[0]) ==4 and len(expList[1]) ==2 and len(expList[2])==2)
+
     # Add Item to List
     def add_it(self):
         # Grab the item from the list box
         productName = self.lineEdit.text() 
-        if(productName.strip() != ""):
+        expDate = self.lineEdit1.text()
+        print(self.checkExpiration(expDate))
+        if(productName.strip() != "" and self.checkExpiration(expDate)):
             qItem = QtWidgets.QListWidgetItem()
             qItem.setText(productName.strip())
             qItem.setCheckState(QtCore.Qt.CheckState.Unchecked)
@@ -115,6 +128,7 @@ class Ui_MainWindow(object):
 
             # Clear the item box
             self.lineEdit.setText("")
+            self.lineEdit1.setText("")
 
 
     def retranslateUi(self, MainWindow):
