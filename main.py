@@ -3,6 +3,7 @@ Authors:
 -Taranveer Purewal
 -Mike Kabbabe
 -Watkin Tang
+-Maaz Khalid
 
 Run This file as an executable to launch program
 """
@@ -23,5 +24,6 @@ def main():
     # t.start()
 
 if __name__ == '__main__':
+    
     main()
     
