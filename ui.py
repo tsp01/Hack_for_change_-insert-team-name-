@@ -124,7 +124,7 @@ class Ui_MainWindow(object):
             
             # Add item to list
             self.col_1.addItem(qItem)
-            self.groceries.add_food(qItem.text()) # find a way to add an expiration date for the second parameter
+            self.groceries.add_food(qItem.text(), expDate) # find a way to add an expiration date for the second parameter
 
             # Clear the item box
             self.lineEdit.setText("")
