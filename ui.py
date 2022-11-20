@@ -38,13 +38,17 @@ class Ui_MainWindow(object):
         self.add_button = QtWidgets.QPushButton(self.centralwidget, clicked = lambda: self.add_it())
         self.add_button.setGeometry(QtCore.QRect(50, 50, 131, 32))
         self.add_button.setObjectName("add_button")
+
+        self.remove_button = QtWidgets.QPushButton(self.centralwidget, clicked = lambda: self.remove_it())
+        self.remove_button.setGeometry(QtCore.QRect(600, 50, 131, 32))
+        self.remove_button.setObjectName("remove_button")
         
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget, placeholderText = "Product Name")
         self.lineEdit.setGeometry(QtCore.QRect(200, 50, 181, 32))
         # self.lineEdit.returnPressed.connect(self.add_it)
         self.lineEdit.setObjectName("lineEdit")
 
-        self.lineEdit1 = QtWidgets.QLineEdit(self.centralwidget, placeholderText = "Expiration Date")
+        self.lineEdit1 = QtWidgets.QLineEdit(self.centralwidget, placeholderText = "YYYY-MM-DD")
         self.lineEdit1.setGeometry(QtCore.QRect(400, 50, 181, 32))
         # self.lineEdit1.returnPressed.connect(self.add_it)
         self.lineEdit1.setObjectName("lineEdit1")
@@ -121,7 +125,6 @@ class Ui_MainWindow(object):
     # Verifies the Expiration date format, in the form YYYY-MM-DD
     def checkExpiration(self, exp):
         expList = exp.split("-")
-        print(expList)
         return (expList[0].isnumeric() and expList[1].isnumeric() and expList[2].isnumeric()) and (len(expList[0]) ==4 and len(expList[1]) ==2 and len(expList[2])==2)
 
     # Add Item to List
@@ -129,7 +132,6 @@ class Ui_MainWindow(object):
         # Grab the item from the list box
         productName = self.lineEdit.text() 
         expDate = self.lineEdit1.text()
-        print(self.checkExpiration(expDate))
         if(productName.strip() != "" and self.checkExpiration(expDate)):
             qItem = QtWidgets.QListWidgetItem()
             qItem.setText(productName.strip())
@@ -137,7 +139,10 @@ class Ui_MainWindow(object):
             
             # Add item to list
             self.groceries.add_food(qItem.text(), expDate)
+            
 
+
+            # Do the usual work to render the list
             self.groceries.sort_foods_list()
             self.clear_cols()
             self.display_cols()
@@ -145,13 +150,33 @@ class Ui_MainWindow(object):
             # Clear the item box
             self.lineEdit.setText("")
             self.lineEdit1.setText("")
-        
+    
+    def remove_it(self):
+        self.remove_checked_foods(self.col_1)
+        self.remove_checked_foods(self.col_2)
+        self.remove_checked_foods(self.col_3)
+
+        self.groceries.sort_foods_list()
+        self.clear_cols()
+        self.display_cols()
+
+    # This will verify whether if any of the QListWidgetItems have had their checkbox pressed, and will return the 
+    def remove_checked_foods(self, column):
+        for index in range(column.count()):
+            self.checkbox=column.item(index)
+            print(self.checkbox.text)
+            state = self.checkbox.checkState()
+            print(state)
+            if(state == QtCore.Qt.CheckState.Checked):
+                column.removeItemWidget(self.checkbox)
+                self.groceries.remove_food(self.checkbox.text())
 
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.add_button.setText(_translate("MainWindow", "Add purchases"))
+        self.remove_button.setText(_translate("MainWindow", "Remove checked"))
         self.col_label_1.setText(_translate("MainWindow", "Groceries"))
         self.col_label_2.setText(_translate("MainWindow", "Expiring Soon"))
         self.col_label_3.setText(_translate("MainWindow", "Expired"))

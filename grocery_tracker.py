@@ -26,13 +26,13 @@ class Groceries:
 
         self.foods = self.total_food_list()
 
-    def remove_food(self, food, expiration):
-
+    def remove_food(self, food):
+        
         with open(PRODUCTS_FILE, "r") as f:
             lines = f.readlines()
         with open(PRODUCTS_FILE, "w") as f:
             for line in lines:
-                if line.strip("\n").split(" ") != [food, expiration]:
+                if line.strip().split(" ")[0] != food: # Only writes to file if it's not what we inputted.
                     f.write(line)
 
         self.foods = self.total_food_list()
