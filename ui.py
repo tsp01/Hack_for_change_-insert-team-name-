@@ -92,6 +92,10 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        self.groceries.sort_foods_list()
+        for item in self.groceries.food_good:
+                self.col_1.addItem(item[0])
+
     # Add Item to List
     def add_it(self):
         # Grab the item from the list box
@@ -117,6 +121,7 @@ class Ui_MainWindow(object):
         self.menuLanding_Page.setTitle(_translate("MainWindow", "Landing Page"))
 
 def run_ui():
+
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()

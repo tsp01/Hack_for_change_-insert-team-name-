@@ -13,7 +13,6 @@ class Groceries:
         self.food_good = []
         self.food_expiring_soon = []
         self.food_expired = []
-        self.sort_foods_list()
         self.date = date.today()
 
     def add_food(self, food, expiration="9999-99-99"):
@@ -53,7 +52,7 @@ class Groceries:
                 if datetime.strptime(line.strip("\n").split(" ")[1], '%Y-%m-%d') > self.date:
                     f.write(line)
                 else:
-                    f.write(line[:-1] + " 1")
+                    f.write(line[:-1] + " 1" + "\n")
 
         self.foods = self.total_food_list()
         
@@ -69,7 +68,7 @@ class Groceries:
                 if  (expiration - self.date).days > round(0.25(expiration - initial_date)).days:
                     f.write(line)
                 else:
-                    f.write(line[:-3] + " 1 0")
+                    f.write(line[:-3] + " 1 0" + "\n")
                     
 
         self.foods = self.total_food_list()
