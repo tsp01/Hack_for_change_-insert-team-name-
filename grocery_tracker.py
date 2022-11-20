@@ -1,7 +1,6 @@
 """
 This file is for tracking groceries and expiration dates
 """
-from food import Food
 from datetime import date, datetime
 
 PRODUCTS_FILE = "tracked_products.txt"
