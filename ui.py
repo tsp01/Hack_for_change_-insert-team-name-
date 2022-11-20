@@ -39,12 +39,6 @@ class Ui_MainWindow(object):
         self.add_button.setGeometry(QtCore.QRect(50, 50, 131, 32))
         self.add_button.setObjectName("add_button")
         
-        self.title = QtWidgets.QLabel(self.centralwidget)
-        self.title.setGeometry(QtCore.QRect(300, 20, 200, 16))
-        self.title.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
-        self.title.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
-        self.title.setObjectName("title")
-        
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget, placeholderText = "Product Name")
         self.lineEdit.setGeometry(QtCore.QRect(180, 50, 181, 32))
         self.lineEdit.returnPressed.connect(self.add_it)
@@ -94,23 +88,30 @@ class Ui_MainWindow(object):
 
         self.groceries.sort_foods_list()
         for item in self.groceries.food_good:
-                self.col_1.addItem(item[0])
+            qItem = QtWidgets.QListWidgetItem()
+            qItem.setText(item[0])
+            qItem.setCheckState(QtCore.Qt.CheckState.Unchecked)
+            self.col_1.addItem(qItem)
 
         for item in self.groceries.food_expiring_soon:
-                self.col_2.addItem(item[0])
+            self.col_2.addItem(item[0])
         
         for item in self.groceries.food_expired:
-                self.col_3.addItem(item[0])
+            self.col_3.addItem(item[0])
 
     # Add Item to List
     def add_it(self):
         # Grab the item from the list box
-        if(self.lineEdit.text() != ""):
-            item = self.lineEdit.text()
-
+        productName = self.lineEdit.text() 
+        if(productName.strip() != ""):
+            qItem = QtWidgets.QListWidgetItem()
+            qItem.setText(productName.strip())
+            qItem.setCheckState(QtCore.Qt.CheckState.Unchecked)
+            print(type(qItem))
+            
             # Add item to list
-            self.col_1.addItem(item)
-            self.groceries.add_food(item) # find a way to add an expiration date for the second parameter
+            self.col_1.addItem(qItem)
+            self.groceries.add_food(qItem.text()) # find a way to add an expiration date for the second parameter
 
             # Clear the item box
             self.lineEdit.setText("")
@@ -120,7 +121,6 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.add_button.setText(_translate("MainWindow", "Add purchases"))
-        self.title.setText(_translate("MainWindow", "LANDING PAGE"))
         self.col_label_1.setText(_translate("MainWindow", "Groceries"))
         self.col_label_2.setText(_translate("MainWindow", "Expiring Soon"))
         self.col_label_3.setText(_translate("MainWindow", "Expired"))
@@ -135,3 +135,5 @@ def run_ui():
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec())
+
+
