@@ -27,7 +27,6 @@ class Groceries:
 
         self.foods = self.total_food_list()
 
-
     def remove_food(self, food, expiration):
 
         with open(PRODUCTS_FILE, "r") as f:

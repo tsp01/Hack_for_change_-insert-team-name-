@@ -96,6 +96,12 @@ class Ui_MainWindow(object):
         for item in self.groceries.food_good:
                 self.col_1.addItem(item[0])
 
+        for item in self.groceries.food_expiring_soon:
+                self.col_2.addItem(item[0])
+        
+        for item in self.groceries.food_expired:
+                self.col_3.addItem(item[0])
+
     # Add Item to List
     def add_it(self):
         # Grab the item from the list box
